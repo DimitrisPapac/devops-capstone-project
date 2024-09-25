@@ -5,6 +5,7 @@ Test cases for Account Model
 import logging
 import unittest
 import os
+from datetime import date
 from service import app
 from service.models import Account, DataValidationError, db
 from tests.factories import AccountFactory
@@ -175,3 +176,37 @@ class TestAccount(unittest.TestCase):
         """It should not Deserialize an account with a TypeError"""
         account = Account()
         self.assertRaises(DataValidationError, account.deserialize, [])
+
+    def test_deserialize_no_date_joined(self):
+        """It should Deserialize an account where the date
+            of joining was left unspecified"""
+        account = AccountFactory()
+        account.date_joined = None
+        account.create()
+        serial_account = account.serialize()
+        new_account = Account()
+        new_account.deserialize(serial_account)
+        self.assertEqual(new_account.name, account.name)
+        self.assertEqual(new_account.email, account.email)
+        self.assertEqual(new_account.address, account.address)
+        self.assertEqual(new_account.phone_number, account.phone_number)
+        self.assertEqual(new_account.date_joined, date.today())
+
+    def test_repr(self):
+        """It should internally represent objects
+        using a specific format"""
+        account = Account()
+        account.id = 1
+        account.name = "John Doe"
+        account.email = "john@doe.com"
+        account.address = "Main str. 1"
+        account.phone_number = '0000000000'
+        account.date_joined = date.today()
+
+        self.assertEqual(str(account), f"<Account {account.name} id=[{account.id}]>")
+        #account.create()
+
+        # Fetch it back by name
+        #same_account = Account.find_by_name(account.name)[0]
+        #self.assertEqual(same_account.id, account.id)
+        # self.assertEqual(same_account.name, account.name)
