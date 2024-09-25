@@ -204,9 +204,3 @@ class TestAccount(unittest.TestCase):
         account.date_joined = date.today()
 
         self.assertEqual(str(account), f"<Account {account.name} id=[{account.id}]>")
-        #account.create()
-
-        # Fetch it back by name
-        #same_account = Account.find_by_name(account.name)[0]
-        #self.assertEqual(same_account.id, account.id)
-        # self.assertEqual(same_account.name, account.name)
