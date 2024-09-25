@@ -115,7 +115,7 @@ Please only use these commands for working stand-alone on your own computer with
     $ make tekton
     ```
 
-3. Install the ClusterTasks that the Cloud IDE has
+3. Install the ClusterTasks that the Cloud IDE has:
 
     ```bash
     $ make clustertasks
