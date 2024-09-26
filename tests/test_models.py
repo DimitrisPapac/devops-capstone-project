@@ -202,5 +202,4 @@ class TestAccount(unittest.TestCase):
         account.address = "Main str. 1"
         account.phone_number = '0000000000'
         account.date_joined = date.today()
-
         self.assertEqual(str(account), f"<Account {account.name} id=[{account.id}]>")
